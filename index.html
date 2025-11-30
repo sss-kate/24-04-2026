@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свадебное приглашение</title>
+
+    <!-- Подключаем шрифты из папки на компьютере -->
+    <style>
+        @font-face {
+            font-family: 'Great Vibes';
+            src: url('./GreatVibes-Regular.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Cormorant Garamond';
+            src: url('./CormorantGaramond-Regular.ttf') format('truetype');
+        }
+    </style>
+
+    <style>
+        /* Общий стиль */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth; /* Плавный скролл */
+        }
+
+        /* Первый блок — героический */
+        .hero-section {
+            height: 100vh;
+            background: url('./Размытый фон.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            margin: 0 0 10px 0;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin: 0 0 30px 0;
+            line-height: 1.4;
+        }
+
+        .slider-container {
+            width: 300px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid white;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            cursor: grab;
+        }
+
+        .slider-handle {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .slider-handle::after {
+            content: '→';
+            font-size: 24px;
+            color: black;
+        }
+
+        .slider-text {
+            position: absolute;
+            left: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            color: white;
+            pointer-events: none;
+        }
+
+        /* Второй блок — белый фон, фото по центру */
+        .second-section {
+            min-height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            box-sizing: border-box;
+            color: black;
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .second-section.active {
+            opacity: 1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 30px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+        }
+
+        .section-header .left {
+            text-align: left;
+        }
+
+        .section-header .right {
+            text-align: right;
+        }
+
+        .content-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .photo-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .names-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            line-height: 1.3;
+            color: white;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .names-container .name {
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+        }
+
+        .names-container .and {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.5rem;
+            margin: 5px 0;
+        }
+
+        .date-large {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .date-large .digit {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 6rem;
+            opacity: 0.3;
+            letter-spacing: -5px;
+        }
+
+        /* Третий блок — тёмный фон, текст приглашения */
+        .third-section {
+            min-height: 100vh;
+            background: #333; /* Тёмно-серый фон */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            box-sizing: border-box;
+            color: white;
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .third-section.active {
+            opacity: 1;
+        }
+
+        .third-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            margin: 0 0 20px 0;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .third-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            line-height: 1.6;
+            max-width: 600px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        /* Четвёртый блок — календарь */
+        .fourth-section {
+            min-height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            box-sizing: border-box;
+            color: black;
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .fourth-section.active {
+            opacity: 1;
+        }
+
+        .fourth-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            margin: 0 0 10px 0;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .month-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            margin: 0 0 20px 0;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .calendar-header {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 5px;
+        }
+
+        .calendar-day {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            padding: 10px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .calendar-day.highlighted {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0;
+        }
+
+        .heart-icon {
+            width: 40px;
+            height: 40px;
+            fill: none;
+            stroke: black;
+            stroke-width: 2;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .heart-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: black;
+            z-index: 2;
+            position: relative;
+            transform: translateY(-2px);
+        }
+
+        .calendar-date {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            margin: 20px 0 30px 0;
+            text-align: center;
+        }
+
+        .photo-proposal {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        /* Пятый блок — тайминг */
+        .fifth-section {
+            min-height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            box-sizing: border-box;
+            color: black;
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .fifth-section.active {
+            opacity: 1;
+        }
+
+        .fifth-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            margin: 0 0 30px 0;
+            text-align: center;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .fifth-title::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 50px;
+            background: black;
+        }
+
+        .timing-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .timing-time {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            margin: 0 0 10px 0;
+            text-align: center;
+        }
+
+        .timing-desc {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            margin: 0;
+            text-align: center;
+        }
+
+        .timing-line {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 50px;
+            background: black;
+        }
+
+        .timing-item:last-child .timing-line {
+            display: none;
+        }
+
+        /* Шестой блок — локация */
+        .sixth-section {
+            min-height: 100vh;
+            background: #333; /* Тёмно-серый фон */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            box-sizing: border-box;
+            color: white;
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .sixth-section.active {
+            opacity: 1;
+        }
+
+        .sixth-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            margin: 0 0 20px 0;
+            text-align: center;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .sixth-title::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: white;
+        }
+
+        .location-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+            max-width: 800px;
+            margin: 30px 0;
+        }
+
+        .location-photo {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .location-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .location-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .location-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            margin: 0;
+            text-align: left;
+        }
+
+        .location-address {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            margin: 0;
+            text-align: left;
+        }
+
+        .location-button {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .location-button:hover {
+            background: white;
+            color: black;
+        }
+
+        /* Седьмой блок — детали */
+        .seventh-section {
+            min-height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            box-sizing: border-box;
+            color: black;
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .seventh-section.active {
+            opacity: 1;
+        }
+
+        .seventh-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            margin: 0 0 30px 0;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .detail-line {
+            width: 2px;
+            height: 100%;
+            background: black;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .detail-content {
+            margin-left: 20px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .detail-subtitle {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+            text-align: left;
+        }
+
+        .detail-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            margin: 0;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        /* Восьмой блок — таймер */
+        .eighth-section {
+            min-height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            box-sizing: border-box;
+            color: black;
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .eighth-section.active {
+            opacity: 1;
+        }
+
+        .eighth-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem; /* Увеличил размер */
+            margin: 0 0 10px 0;
+            text-align: center;
+            font-weight: normal; /* Убрал жирность */
+        }
+
+        .eighth-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem; /* Увеличил размер */
+            margin: 0 0 30px 0;
+            text-align: center;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 30px; /* Увеличил отступ между цифрами */
+            justify-content: center;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .countdown-number {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem; /* Увеличил размер */
+            margin: 0;
+            text-align: center;
+        }
+
+        .countdown-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem; /* Увеличил размер */
+            margin: 0;
+            text-align: center;
+        }
+
+        /* Кнопка включения музыки */
+        .music-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.3);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .music-button:hover {
+            opacity: 1;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+
+            .slider-container {
+                width: 250px;
+                height: 50px;
+            }
+
+            .slider-handle {
+                width: 50px;
+                height: 50px;
+            }
+
+            .slider-text {
+                font-size: 0.9rem;
+                left: 60px;
+            }
+
+            .second-section {
+                padding: 30px 10px;
+            }
+
+            .content-wrapper {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .photo-container {
+                width: 250px;
+                height: 250px;
+            }
+
+            .date-large {
+                flex-direction: row;
+                gap: 10px;
+            }
+
+            .date-large .digit {
+                font-size: 4rem;
+            }
+
+            .section-header {
+                font-size: 1rem;
+            }
+
+            .names-container {
+                font-size: 1rem;
+            }
+
+            .names-container .name {
+                font-size: 1.5rem;
+            }
+
+            .third-title {
+                font-size: 2.5rem;
+            }
+
+            .third-text {
+                font-size: 1.3rem;
+                line-height: 1.5;
+            }
+
+            .fourth-title {
+                font-size: 2.5rem;
+            }
+
+            .month-title {
+                font-size: 1.5rem;
+            }
+
+            .calendar {
+                gap: 5px;
+                max-width: 350px;
+            }
+
+            .calendar-header {
+                font-size: 0.8rem;
+            }
+
+            .calendar-day {
+                font-size: 1rem;
+                padding: 8px;
+            }
+
+            .calendar-day.highlighted {
+                width: 35px;
+                height: 35px;
+                padding: 0;
+            }
+
+            .heart-icon {
+                width: 35px;
+                height: 35px;
+            }
+
+            .heart-number {
+                font-size: 1.2rem;
+                transform: translateY(-2px);
+            }
+
+            .calendar-date {
+                font-size: 1.5rem;
+            }
+
+            .photo-proposal {
+                max-width: 100%;
+            }
+
+            .fifth-title {
+                font-size: 2.5rem;
+                margin: 0 0 20px 0;
+            }
+
+            .fifth-title::after {
+                height: 30px;
+            }
+
+            .timing-item {
+                margin: 20px 0;
+            }
+
+            .timing-time {
+                font-size: 2.2rem;
+            }
+
+            .timing-desc {
+                font-size: 1.2rem;
+            }
+
+            .timing-line {
+                height: 30px;
+            }
+
+            .sixth-title {
+                font-size: 2.5rem;
+                margin: 0 0 20px 0;
+            }
+
+            .sixth-title::after {
+                width: 80px;
+            }
+
+            .location-wrapper {
+                flex-direction: column;
+                gap: 20px;
+                max-width: 100%;
+            }
+
+            .location-photo {
+                width: 100%;
+                max-width: 300px;
+                height: 250px;
+            }
+
+            .location-name {
+                font-size: 2rem;
+            }
+
+            .location-address {
+                font-size: 1.2rem;
+            }
+
+            .location-button {
+                font-size: 1.1rem;
+                padding: 10px 15px;
+            }
+
+            .seventh-title {
+                font-size: 2.5rem;
+                margin: 0 0 20px 0;
+            }
+
+            .detail-item {
+                flex-direction: column;
+                gap: 10px;
+                max-width: 100%;
+            }
+
+            .detail-line {
+                width: 100%;
+                height: 2px;
+                left: 0;
+                top: 0;
+                transform: translateY(-50%);
+            }
+
+            .detail-content {
+                margin-left: 0;
+                padding-left: 0;
+            }
+
+            .detail-subtitle {
+                font-size: 2rem;
+            }
+
+            .detail-text {
+                font-size: 1.2rem;
+            }
+
+            .eighth-section {
+                padding: 30px 20px;
+                align-items: center;
+            }
+
+            .eighth-title {
+                font-size: 3rem;
+                text-align: center;
+            }
+
+            .eighth-subtitle {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            .countdown {
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .countdown-number {
+                font-size: 3rem;
+            }
+
+            .countdown-label {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .slider-container {
+                width: 200px;
+                height: 45px;
+            }
+
+            .slider-handle {
+                width: 45px;
+                height: 45px;
+            }
+
+            .slider-text {
+                font-size: 0.8rem;
+                left: 55px;
+            }
+
+            .photo-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .date-large .digit {
+                font-size: 3rem;
+            }
+
+            .names-container {
+                font-size: 0.9rem;
+            }
+
+            .names-container .name {
+                font-size: 1.2rem;
+            }
+
+            .third-title {
+                font-size: 2rem;
+            }
+
+            .third-text {
+                font-size: 1.2rem;
+                line-height: 1.4;
+            }
+
+            .fourth-title {
+                font-size: 2rem;
+            }
+
+            .month-title {
+                font-size: 1.2rem;
+            }
+
+            .calendar {
+                max-width: 300px;
+            }
+
+            .calendar-header {
+                font-size: 0.7rem;
+            }
+
+            .calendar-day {
+                font-size: 0.9rem;
+                padding: 6px;
+            }
+
+            .calendar-day.highlighted {
+                width: 30px;
+                height: 30px;
+                padding: 0;
+            }
+
+            .heart-icon {
+                width: 30px;
+                height: 30px;
+            }
+
+            .heart-number {
+                font-size: 1rem;
+                transform: translateY(-2px);
+            }
+
+            .calendar-date {
+                font-size: 1.2rem;
+            }
+
+            .fifth-title {
+                font-size: 2rem;
+                margin: 0 0 15px 0;
+            }
+
+            .fifth-title::after {
+                height: 20px;
+            }
+
+            .timing-item {
+                margin: 15px 0;
+            }
+
+            .timing-time {
+                font-size: 1.8rem;
+            }
+
+            .timing-desc {
+                font-size: 1rem;
+            }
+
+            .timing-line {
+                height: 20px;
+            }
+
+            .sixth-title {
+                font-size: 2rem;
+                margin: 0 0 15px 0;
+            }
+
+            .sixth-title::after {
+                width: 60px;
+            }
+
+            .location-photo {
+                width: 100%;
+                max-width: 250px;
+                height: 200px;
+            }
+
+            .location-name {
+                font-size: 1.8rem;
+            }
+
+            .location-address {
+                font-size: 1rem;
+            }
+
+            .location-button {
+                font-size: 1rem;
+                padding: 8px 12px;
+            }
+
+            .seventh-title {
+                font-size: 2rem;
+                margin: 0 0 15px 0;
+            }
+
+            .detail-item {
+                gap: 5px;
+            }
+
+            .detail-line {
+                height: 2px;
+                top: 0;
+                transform: translateY(0);
+            }
+
+            .detail-subtitle {
+                font-size: 1.8rem;
+            }
+
+            .detail-text {
+                font-size: 1rem;
+            }
+
+            .eighth-title {
+                font-size: 2.5rem;
+                text-align: center;
+            }
+
+            .eighth-subtitle {
+                font-size: 1.2rem;
+                text-align: center;
+            }
+
+            .countdown {
+                gap: 15px;
+            }
+
+            .countdown-number {
+                font-size: 2.5rem;
+            }
+
+            .countdown-label {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- НАЧАЛО ПЕРВОГО БЛОКА -->
+    <div class="hero-section">
+        <h1 class="hero-title">Приглашение</h1>
+        <p class="hero-subtitle">От которого невозможно<br>отказаться</p>
+        <div class="slider-container" id="slider">
+            <div class="slider-handle" id="handle"></div>
+            <span class="slider-text">Открыть приглашение</span>
+        </div>
+    </div>
+    <!-- КОНЕЦ ПЕРВОГО БЛОКА -->
+
+    <!-- НАЧАЛО ВТОРОГО БЛОКА -->
+    <div class="second-section" id="secondSection">
+        <div class="section-header">
+            <div class="left">wedding day</div>
+            <div class="right">24.04.2026</div>
+        </div>
+        <div class="content-wrapper">
+            <div class="photo-container">
+                <img src="./Фон.jpg" alt="Александр и Виктория">
+                <div class="names-container">
+                    <div class="name">ALEXANDR</div>
+                    <div class="and">and</div>
+                    <div class="name">VIKTORIA</div>
+                </div>
+            </div>
+            <div class="date-large">
+                <div class="digit">24</div>
+                <div class="digit">04</div>
+                <div class="digit">26</div>
+            </div>
+        </div>
+    </div>
+    <!-- КОНЕЦ ВТОРОГО БЛОКА -->
+
+    <!-- НАЧАЛО ТРЕТЬЕГО БЛОКА -->
+    <div class="third-section" id="thirdSection">
+        <h2 class="third-title">Наши дорогие гости!</h2>
+        <p class="third-text">
+            Уже скоро наступит тот самый особенный день — день нашей свадьбы! Этот день мы хотим провести в кругу самых близких и родных людей, и будем рады если вы примете наше приглашение и разделите с нами этот прекрасный праздник!
+        </p>
+    </div>
+    <!-- КОНЕЦ ТРЕТЬЕГО БЛОКА -->
+
+    <!-- НАЧАЛО ЧЕТВЁРТОГО БЛОКА -->
+    <div class="fourth-section" id="fourthSection">
+        <h2 class="fourth-title">МЫ СТАНЕМ СЕМЬЁЙ</h2>
+        <div class="month-title">Апрель</div>
+        <div class="calendar">
+            <div class="calendar-header">ПН</div>
+            <div class="calendar-header">ВТ</div>
+            <div class="calendar-header">СР</div>
+            <div class="calendar-header">ЧТ</div>
+            <div class="calendar-header">ПТ</div>
+            <div class="calendar-header">СБ</div>
+            <div class="calendar-header">ВС</div>
+            <div class="calendar-day">1</div>
+            <div class="calendar-day">2</div>
+            <div class="calendar-day">3</div>
+            <div class="calendar-day">4</div>
+            <div class="calendar-day">5</div>
+            <div class="calendar-day">6</div>
+            <div class="calendar-day">7</div>
+            <div class="calendar-day">8</div>
+            <div class="calendar-day">9</div>
+            <div class="calendar-day">10</div>
+            <div class="calendar-day">11</div>
+            <div class="calendar-day">12</div>
+            <div class="calendar-day">13</div>
+            <div class="calendar-day">14</div>
+            <div class="calendar-day">15</div>
+            <div class="calendar-day">16</div>
+            <div class="calendar-day">17</div>
+            <div class="calendar-day">18</div>
+            <div class="calendar-day">19</div>
+            <div class="calendar-day">20</div>
+            <div class="calendar-day">21</div>
+            <div class="calendar-day">22</div>
+            <div class="calendar-day">23</div>
+            <div class="calendar-day highlighted">
+                <svg class="heart-icon" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <span class="heart-number">24</span>
+            </div>
+            <div class="calendar-day">25</div>
+            <div class="calendar-day">26</div>
+            <div class="calendar-day">27</div>
+            <div class="calendar-day">28</div>
+            <div class="calendar-day">29</div>
+            <div class="calendar-day">30</div>
+        </div>
+        <div class="calendar-date">24.04.2026</div>
+        <img class="photo-proposal" src="./Фотка с предложения.jpg" alt="Фото с предложения">
+    </div>
+    <!-- КОНЕЦ ЧЕТВЁРТОГО БЛОКА -->
+
+    <!-- НАЧАЛО ПЯТОГО БЛОКА -->
+    <div class="fifth-section" id="fifthSection">
+        <h2 class="fifth-title">ТАЙМИНГ</h2>
+        <div class="timing-item">
+            <div class="timing-time">16:00</div>
+            <div class="timing-desc">Сбор гостей</div>
+            <div class="timing-line"></div>
+        </div>
+        <div class="timing-item">
+            <div class="timing-time">16:30</div>
+            <div class="timing-desc">Выездная церемония</div>
+            <div class="timing-line"></div>
+        </div>
+        <div class="timing-item">
+            <div class="timing-time">17:00</div>
+            <div class="timing-desc">Банкет</div>
+            <div class="timing-line"></div>
+        </div>
+        <div class="timing-item">
+            <div class="timing-time">23:00</div>
+            <div class="timing-desc">Завершение вечера</div>
+        </div>
+    </div>
+    <!-- КОНЕЦ ПЯТОГО БЛОКА -->
+
+    <!-- НАЧАЛО ШЕСТОГО БЛОКА -->
+    <div class="sixth-section" id="sixthSection">
+        <h2 class="sixth-title">ЛОКАЦИЯ</h2>
+        <div class="location-wrapper">
+            <div class="location-photo">
+                <img src="./Локация.jpg" alt="Локация">
+            </div>
+            <div class="location-text">
+                <div class="location-name">Золотой берег</div>
+                <div class="location-address">Территория Базы отдыха Бережок, 1</div>
+            </div>
+        </div>
+        <button class="location-button" onclick="window.open('https://yandex.ru/maps/-/CLcy6L8o', '_blank')">ПЕРЕЙТИ К КАРТЕ</button>
+    </div>
+    <!-- КОНЕЦ ШЕСТОГО БЛОКА -->
+
+    <!-- НАЧАЛО СЕДЬМОГО БЛОКА -->
+    <div class="seventh-section" id="seventhSection">
+        <h2 class="seventh-title">ДЕТАЛИ</h2>
+        <div class="detail-item">
+            <div class="detail-line"></div>
+            <div class="detail-content">
+                <div class="detail-subtitle">Подарки</div>
+                <div class="detail-text">
+                    Мы знаем как тяжело выбрать подарок, ведь так хочется чтобы он был нужным и полезным. Чтобы не затруднять вас выбором подарков — мы будем рады вкладу в наш семейный бюджет, который вы принесете в конверте)
+                </div>
+            </div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-line"></div>
+            <div class="detail-content">
+                <div class="detail-subtitle">Дресс-код</div>
+                <div class="detail-text">
+                    Нам главное ваше присутствие, поэтому выбор наряда остаётся за вами. Мы не делаем ограничения в цвете ваших образов, но если вы предпочтете спокойные, пастельные или глубокие оттенки — мы будем благодарны!
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- КОНЕЦ СЕДЬМОГО БЛОКА -->
+
+    <!-- НАЧАЛО ВОСЬМОГО БЛОКА -->
+    <div class="eighth-section" id="eighthSection">
+        <h2 class="eighth-title">Увидимся</h2>
+        <div class="eighth-subtitle">через...</div>
+        <div class="countdown" id="countdown">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">0</div>
+                <div class="countdown-label">дней</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">0</div>
+                <div class="countdown-label">часов</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">0</div>
+                <div class="countdown-label">минут</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">0</div>
+                <div class="countdown-label">секунд</div>
+            </div>
+        </div>
+    </div>
+    <!-- КОНЕЦ ВОСЬМОГО БЛОКА -->
+
+    <!-- КНОПКА ВКЛЮЧЕНИЯ МУЗЫКИ -->
+    <button class="music-button" id="musicButton" title="Включить музыку">♪</button>
+
+    <!-- АУДИО (фоновая музыка) -->
+    <audio id="background-audio" loop preload="auto" style="display: none;">
+        <source src="./Ёлка - Моревнутри#2 (hitmo.net).mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает HTML5 аудио.
+    </audio>
+
+    <script>
+        // Скрипт для перетаскивания ползунка и перехода ко второму блоку
+        const slider = document.getElementById('slider');
+        const handle = document.getElementById('handle');
+        const secondSection = document.getElementById('secondSection');
+        const thirdSection = document.getElementById('thirdSection');
+        const fourthSection = document.getElementById('fourthSection');
+        const fifthSection = document.getElementById('fifthSection');
+        const sixthSection = document.getElementById('sixthSection');
+        const seventhSection = document.getElementById('seventhSection');
+        const eighthSection = document.getElementById('eighthSection');
+
+        let isDragging = false;
+        let startX;
+        let startLeft;
+
+        handle.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX - handle.getBoundingClientRect().left;
+            startLeft = parseInt(getComputedStyle(handle).left);
+            handle.style.cursor = 'grabbing';
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+
+            const sliderRect = slider.getBoundingClientRect();
+            let newLeft = e.clientX - sliderRect.left - startX;
+
+            // Ограничиваем движение в пределах слайдера
+            if (newLeft < 0) newLeft = 0;
+            if (newLeft > sliderRect.width - handle.offsetWidth) newLeft = sliderRect.width - handle.offsetWidth;
+
+            handle.style.left = newLeft + 'px';
+
+            // Если ползунок почти дошёл до конца — показываем второй блок
+            if (newLeft >= sliderRect.width - handle.offsetWidth - 5) {
+                secondSection.classList.add('active');
+                window.scrollTo({
+                    top: secondSection.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            handle.style.cursor = 'grab';
+        });
+
+        // Для мобильных устройств
+        handle.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].clientX - handle.getBoundingClientRect().left;
+            startLeft = parseInt(getComputedStyle(handle).left);
+            e.preventDefault();
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+
+            const sliderRect = slider.getBoundingClientRect();
+            let newLeft = e.touches[0].clientX - sliderRect.left - startX;
+
+            if (newLeft < 0) newLeft = 0;
+            if (newLeft > sliderRect.width - handle.offsetWidth) newLeft = sliderRect.width - handle.offsetWidth;
+
+            handle.style.left = newLeft + 'px';
+
+            if (newLeft >= sliderRect.width - handle.offsetWidth - 5) {
+                secondSection.classList.add('active');
+                window.scrollTo({
+                    top: secondSection.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+
+        document.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        // Автоматически показываем третий, четвёртый, пятый, шестой, седьмой и восьмой блоки при скролле
+        window.addEventListener('scroll', () => {
+            const thirdTop = thirdSection.getBoundingClientRect().top;
+            const fourthTop = fourthSection.getBoundingClientRect().top;
+            const fifthTop = fifthSection.getBoundingClientRect().top;
+            const sixthTop = sixthSection.getBoundingClientRect().top;
+            const seventhTop = seventhSection.getBoundingClientRect().top;
+            const eighthTop = eighthSection.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+
+            if (thirdTop < windowHeight * 0.8) {
+                thirdSection.classList.add('active');
+            }
+
+            if (fourthTop < windowHeight * 0.8) {
+                fourthSection.classList.add('active');
+            }
+
+            if (fifthTop < windowHeight * 0.8) {
+                fifthSection.classList.add('active');
+            }
+
+            if (sixthTop < windowHeight * 0.8) {
+                sixthSection.classList.add('active');
+            }
+
+            if (seventhTop < windowHeight * 0.8) {
+                seventhSection.classList.add('active');
+            }
+
+            if (eighthTop < windowHeight * 0.8) {
+                eighthSection.classList.add('active');
+            }
+        });
+
+        // Скрипт для обратного отсчёта до 24.04.2026 16:00
+        function updateCountdown() {
+            const targetDate = new Date('2026-04-24T16:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById('days').innerText = '0';
+                document.getElementById('hours').innerText = '00';
+                document.getElementById('minutes').innerText = '00';
+                document.getElementById('seconds').innerText = '00';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+        }
+
+        // Обновляем таймер каждую секунду
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Запускаем сразу
+
+        // Включение музыки по нажатию на кнопку
+        const musicButton = document.getElementById('musicButton');
+        const audio = document.getElementById('background-audio');
+
+        musicButton.addEventListener('click', () => {
+            audio.play().then(() => {
+                console.log("Музыка включена.");
+                musicButton.style.background = 'rgba(0, 100, 0, 0.5)'; // Зелёный цвет при включении
+            }).catch(e => {
+                console.log("Ошибка воспроизведения:", e);
+            });
+        });
+    </script>
+
+</body>
+</html>
