@@ -108,8 +108,9 @@
         /* Новые стили для нового макета */
         .new-content-wrapper {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             width: 100%;
             max-width: 1000px;
             margin: 0 auto;
@@ -149,15 +150,16 @@
             font-size: 1.5rem;
             margin: 5px 0;
         }
-        .date-large {
+        .date-horizontal {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
         }
-        .date-large .digit {
+        .date-horizontal .digit {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 6rem;
+            font-size: 4rem;
             opacity: 0.3;
             letter-spacing: -5px;
         }
@@ -616,11 +618,11 @@
                 width: 250px;
                 height: 250px;
             }
-            .date-large {
-                margin-top: 20px;
+            .date-horizontal {
+                gap: 20px;
             }
-            .date-large .digit {
-                font-size: 4rem;
+            .date-horizontal .digit {
+                font-size: 3rem;
             }
             .section-header {
                 font-size: 1rem;
@@ -792,11 +794,11 @@
                 width: 200px;
                 height: 200px;
             }
-            .date-large {
-                margin-top: 10px;
+            .date-horizontal {
+                gap: 15px;
             }
-            .date-large .digit {
-                font-size: 3rem;
+            .date-horizontal .digit {
+                font-size: 2.5rem;
             }
             .names-container {
                 font-size: 0.9rem;
@@ -953,8 +955,8 @@
             <div class="photo-item">
                 <img src="./море.jpg" alt="Море">
             </div>
-            <!-- Цифры даты справа -->
-            <div class="date-large">
+            <!-- Цифры даты горизонтально под фото -->
+            <div class="date-horizontal">
                 <div class="digit">24</div>
                 <div class="digit">04</div>
                 <div class="digit">26</div>
